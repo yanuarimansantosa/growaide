@@ -228,8 +228,8 @@
     </div>
 
     <div class="form-group">
-      <label class="form-label">Tanggal Lahir</label>
-      <input type="date" class="form-input" id="childDob" required>
+      <label class="form-label">Tahun Lahir</label>
+      <input type="number" class="form-input" id="childDob" placeholder="Contoh: 2024" min="1980" max="2026" required>
     </div>
 
     <div class="note-box">
@@ -309,7 +309,7 @@
     const dob = document.getElementById('childDob').value;
 
     if (!name || !dob || selected.size === 0) {
-      alert('Lengkapi nama, tanggal lahir, dan pilih minimal 1 perilaku');
+      alert('Lengkapi nama, tahun lahir, dan pilih minimal 1 perilaku');
       return;
     }
 
@@ -322,16 +322,15 @@
     callObserveAPI(name, dob, Array.from(selected));
   });
 
-  function callObserveAPI(name, dob, triggers) {
-    // Calculate age in months
-    const today = new Date();
-    const birthDate = new Date(dob);
-    let ageMonths = (today.getFullYear() - birthDate.getFullYear()) * 12 + (today.getMonth() - birthDate.getMonth());
+  function callObserveAPI(name, birthYear, triggers) {
+    // Calculate age in months from year only (assume born Jan 1)
+    const currentYear = new Date().getFullYear();
+    let ageMonths = (currentYear - parseInt(birthYear)) * 12;
     ageMonths = Math.max(0, ageMonths);
 
     const payload = {
       child_name: name,
-      child_dob: dob,
+      child_birth_year: parseInt(birthYear),
       age_months: ageMonths,
       observation_triggers: triggers
     };
@@ -358,9 +357,8 @@
     });
   }
 
-  // Date input: default to today, max today
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('childDob').max = today;
+  // Year input: set default to current year
+  document.getElementById('childDob').value = new Date().getFullYear();
 </script>
 
 </body>
