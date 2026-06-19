@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rekomendasi Metode — GrowAIde</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+  :root {
+    --primary: #10B981;
+    --primary-dark: #059669;
+    --secondary: #0D9488;
+    --dark: #0A1628;
+    --navy: #0F2044;
+    --gray: #64748B;
+    --gray-light: rgba(255,255,255,0.6);
+    --white: #FFFFFF;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Plus Jakarta Sans',system-ui,sans-serif; background:var(--dark); color:var(--white); min-height:100vh; }
+  
+  .header {
+    background:linear-gradient(135deg, var(--dark), var(--navy));
+    padding:2rem 2rem 1.5rem;
+    border-bottom:1px solid rgba(255,255,255,0.06);
+  }
+  .logo { font-size:1.2rem; font-weight:800; margin-bottom:1rem; }
+  .logo .ai { color:var(--primary); }
+  h1 { font-size:clamp(1.6rem, 5vw, 2rem); font-weight:800; margin-bottom:0.5rem; }
+  .subtitle { font-size:0.95rem; color:var(--gray-light); margin-bottom:1.5rem; }
+  
+  .container { max-width:800px; margin:0 auto; padding:2rem; }
+  
+  .intro {
+    background:linear-gradient(135deg, rgba(16,185,129,0.1), rgba(13,148,136,0.1));
+    border:1px solid rgba(16,185,129,0.2);
+    border-radius:16px;
+    padding:2rem;
+    margin-bottom:3rem;
+    text-align:center;
+  }
+  
+  .intro-title { font-size:1.4rem; font-weight:800; margin-bottom:0.5rem; color:var(--primary); }
+  .intro-sub { font-size:0.95rem; color:var(--gray-light); line-height:1.6; }
+  
+  .recommendation {
+    margin-bottom:2.5rem;
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:16px;
+    overflow:hidden;
+    background:rgba(255,255,255,0.02);
+  }
+  
+  .rec-header {
+    padding:1.5rem 2rem;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-left:4px solid var(--primary);
+    background:rgba(16,185,129,0.04);
+  }
+  
+  .rec-header:hover { background:rgba(16,185,129,0.08); }
+  
+  .rec-title {
+    flex:1;
+  }
+  
+  .rec-rank { font-size:2rem; width:50px; }
+  .rec-name { font-size:1.3rem; font-weight:800; margin-bottom:0.25rem; }
+  .rec-score { font-size:0.85rem; color:var(--primary); font-weight:700; }
+  .rec-toggle { font-size:1.2rem; transition:transform 0.2s; }
+  .rec-header.open .rec-toggle { transform:rotate(180deg); }
+  
+  .rec-content {
+    display:none;
+    padding:2rem;
+    border-top:1px solid rgba(255,255,255,0.06);
+  }
+  
+  .rec-content.open { display:block; }
+  
+  .mom-box {
+    background:rgba(16,185,129,0.08);
+    border-left:4px solid var(--primary);
+    padding:1.5rem;
+    border-radius:8px;
+    margin-bottom:1.5rem;
+    line-height:1.7;
+  }
+  
+  .mom-box strong { color:var(--primary); display:block; margin-bottom:0.5rem; }
+  .mom-box em { font-style:italic; color:var(--gray-light); }
+  
+  .tip-card {
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.08);
+    padding:1.25rem;
+    border-radius:12px;
+    margin-bottom:1rem;
+  }
+  
+  .tip-title { font-weight:700; margin-bottom:0.5rem; color:var(--white); }
+  .tip-content { font-size:0.9rem; color:var(--gray-light); line-height:1.6; }
+  
+  .tabs {
+    display:flex;
+    gap:0.5rem;
+    margin:2rem 0 1.5rem;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+  }
+  
+  .tab-btn {
+    padding:0.75rem 1.25rem;
+    background:transparent;
+    border:none;
+    color:var(--gray-light);
+    cursor:pointer;
+    font-weight:600;
+    font-size:0.9rem;
+    border-bottom:2px solid transparent;
+    transition:all 0.2s;
+    font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+  }
+  
+  .tab-btn.active { color:var(--primary); border-bottom-color:var(--primary); }
+  .tab-btn:hover { color:var(--white); }
+  
+  .tab-content { display:none; font-size:0.9rem; line-height:1.7; color:var(--gray-light); }
+  .tab-content.active { display:block; }
+  
+  .link-btn {
+    display:inline-block;
+    margin-top:1rem;
+    padding:0.7rem 1.5rem;
+    background:var(--primary);
+    color:var(--dark);
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:600;
+    font-size:0.85rem;
+    transition:all 0.2s;
+  }
+  
+  .link-btn:hover { background:var(--primary-dark); transform:translateY(-2px); }
+  
+  .cta-section {
+    text-align:center;
+    padding:2rem;
+    margin-top:3rem;
+    background:rgba(16,185,129,0.05);
+    border-radius:16px;
+  }
+  
+  .btn {
+    display:inline-block;
+    padding:0.9rem 2rem;
+    border-radius:12px;
+    border:none;
+    font-weight:700;
+    font-size:0.95rem;
+    cursor:pointer;
+    transition:all 0.2s;
+    min-height:48px;
+    font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+    text-decoration:none;
+    margin:0.5rem;
+  }
+  
+  .btn-primary { background:var(--primary); color:var(--dark); }
+  .btn-primary:hover { background:var(--primary-dark); transform:translateY(-2px); }
+  
+  .btn-secondary { background:transparent; color:var(--white); border:1.5px solid rgba(255,255,255,0.2); }
+  .btn-secondary:hover { border-color:var(--primary); color:var(--primary); }
+  
+  .q-and-a { margin:1.5rem 0; }
+  .q-and-a details { margin-bottom:1rem; }
+  .q-and-a summary { cursor:pointer; font-weight:600; color:var(--white); padding:0.75rem; background:rgba(16,185,129,0.06); border-radius:8px; }
+  .q-and-a summary:hover { background:rgba(16,185,129,0.1); }
+  .q-and-a p { margin-top:0.75rem; margin-left:1rem; font-size:0.9rem; color:var(--gray-light); line-height:1.6; }
+  
+  @media (max-width:768px) {
+    .container { padding:1.5rem; }
+    .rec-header { padding:1.25rem 1.5rem; }
+    .rec-content { padding:1.5rem; }
+    .tabs { flex-wrap:wrap; }
+    .tab-btn { padding:0.6rem 1rem; font-size:0.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo"><span>Grow</span><span class="ai">AI</span><span>de</span></div>
+  <h1>✨ Metode Terbaik untuk Anak Anda</h1>
+  <p class="subtitle">Klik buat baca tips praktis, template, & checklist</p>
+</div>
+
+<div class="container">
+  <div class="intro">
+    <div class="intro-title" id="childName">Rekomendasi Siap</div>
+    <div class="intro-sub">
+      <strong>3 metode yang paling cocok</strong> berdasarkan karakter anak & gaya Ibu. <br>
+      Bukan teori rumit — langsung aplikasi harian.
+    </div>
+  </div>
+
+  <div id="recommendationsContainer">
+    <!-- Loaded via JS -->
+  </div>
+
+  <div class="cta-section">
+    <h3 style="margin-bottom:1rem;">Langkah Berikutnya</h3>
+    <button class="btn btn-primary" onclick="downloadGuide()">📥 Download Panduan</button>
+    <button class="btn btn-secondary" onclick="window.location.href='/'">← Mulai Ulang</button>
+  </div>
+</div>
+
+<script>
+  const METHODS = {
+    1: {
+      name: 'Montessori',
+      slug: 'montessori',
+      gistmom: 'Biarkan anak eksplorasi. Ibu fasilitator, bukan bos.',
+      whatismom: 'Montessori itu sederhana: anak diberi kebebasan memilih aktivitas, belajar dari kesalahan sendiri. Ibu tinggal amati, dorong, dan siap bantu kalau diminta. Anak jadi mandiri, problem-solver, percaya diri.',
+      tips: [
+        { title: '🎨 Siapkan "sudut eksplorasi"', content: 'Rak rendah, mainan bisa Dina ambil sendiri. Ganti setiap 2-3 minggu biar tetap menarik. Nggak perlu mahal—blok kayu, pasir, air, potongan kain, semuanya bisa.' },
+        { title: '🤔 Dengarkan "mengapa?" Dina', content: 'Dina tanya "kenapa tumbuhan perlu air?" — jangan langsung jawab. Tanya balik: "Kamu pikir kenapa?" Biarkan dia pikir. Ini cara terbaik anak belajar.' },
+        { title: '❌ Biarkan dia gagal', content: 'Jatuh dari mainan? Biarkan bangun sendiri (kecuali bahaya). Puzzle susah? "Coba pake cara apa lagi?" Dari sini anak jadi resilient.' },
+        { title: '⏰ Jangan tergesa', content: 'Dina masih mainan sama satu mainan 30 menit? Bagus! Itu fokus berkembang. Jangan disela untuk pindah mainan.' }
+      ],
+      qasom: [
+        { q: 'Gimana kalau Dina nggak mau belajar membaca?', a: 'Montessori percaya: anak akan belajar membaca saat dia SIAP (biasanya 4-6 tahun). Jangan dipaksa. Kasih banyak buku, baca bareng, tunjukkan huruf di mana-mana. Saat dia ready, dia akan minta belajar.' },
+        { q: 'Takut anak jadi terlalu bebas?', a: 'Kebebasan punya batas. "Ibu, boleh aku... nggopak rumah?" Jawab: "Nggak boleh, soalnya bahaya. Tapi boleh aku tunjukkin cara aman?" Konsisten & jelas.' },
+        { q: 'Berapa lama sebelum Dina lebih mandiri?', a: '2-4 minggu sudah terlihat. Fokus lebih lama, tantrum berkurang, suka coba hal baru sendiri. Tapi patience—ini proses.' }
+      ],
+      modul_key_points: [
+        "🎯 Anak memimpin, Ibu fasilitator — biarkan dia pilih aktivitas. Jangan dipaksa, amati minat dia dulu",
+        "🏠 Siapkan sudut rendah dengan 6-8 aktivitas pilihan. Rotasi setiap 2 minggu sesuai minat anak",
+        "🤝 Konsentrasi tanpa gangguan = pembelajaran terbaik. Block 1-2 jam tanpa TV, gadget, atau ajakan orang",
+        "❌ Jangan beri reward stiker/hadiah. Kepuasan real dari menguasai skill lebih berharga & lasting",
+        "⏰ Setiap anak punya timeline sendiri. Baca dini usia 4 sama baiknya dengan usia 6 tahun",
+        "📚 Material konkret dulu, abstrak nanti. Anak PEGANG pembelajaran, bukan cuma dengar teori",
+        "👥 Kakak bisa ajar adik. Mixed-age play = natural mentoring yang strengthen both kids",
+        "🏡 Practical life = real work rumah (masak, bersih, rapikan), bukan pretend play"
+      ],
+      jadwal_checklist: {
+        "0_3_tahun": {
+          pagi: [
+            "06:30 — Bangun, ganti baju sendiri, sikat gigi (bantuan minimal)",
+            "07:00 — Sarapan mandiri, anak makan dengan sendok",
+            "08:00 — Siklus kerja 60 menit (sensorial atau motorik halus)"
+          ],
+          siang: [
+            "11:00 — Bantu masak sederhana (cuci sayur, aduk)",
+            "11:30 — Makan siang bersama keluarga",
+            "12:00 — Tidur siang (~90 menit)"
+          ],
+          sore: [
+            "13:30 — Bangun, snack mandiri, ambil sendiri dari rak",
+            "14:00 — Free play sensori (air, pasir, playdough)",
+            "15:00 — Rapikan mainan sendiri & baca buku bersama"
+          ]
+        },
+        "3_6_tahun": {
+          pagi: [
+            "06:30 — Self-care mandiri (pakaian, sikat gigi, rapikan kasur)",
+            "07:00 — Sarapan, anak membantu persiapan & menuang susu",
+            "08:00 — Siklus kerja panjang 90 menit (bahasa, math, sensori)"
+          ],
+          siang: [
+            "11:45 — Practical life: potong pisang, kupas telur, aduk adonan",
+            "12:15 — Makan mandiri, cuci piring sendiri",
+            "12:45 — Waktu tenang atau tidur siang optional (60 menit)"
+          ],
+          sore: [
+            "14:00 — Aktivitas pilihan: proyek seni atau eksperimen",
+            "15:00 — Membaca mandiri atau dibacakan cerita panjang",
+            "15:30 — Kembalikan semua material ke rak, bersihkan area kerja"
+          ]
+        },
+        "6_9_tahun": {
+          pagi: [
+            "06:30 — Morning routine mandiri (termasuk rapikan kamar)",
+            "07:00 — Sarapan & tulis 1-2 kalimat rencana hari",
+            "07:30 — Great Work: Matematika (stamp game, bead frame)"
+          ],
+          siang: [
+            "12:00 — Masak & makan siang, cuci piring mandiri",
+            "12:45 — Quiet time: membaca mandiri atau tulis jurnal (45 menit)",
+            "13:30 — Proyek riset atau 'Going Out' (60 menit)"
+          ],
+          sore: [
+            "14:30 — Seni/musik/kerajinan (45 menit)",
+            "15:15 — Refleksi: apa dipelajari, apa sulit, rencana besok",
+            "15:30 — Free time outdoor atau aktivitas pilihan anak (90 menit)"
+          ]
+        }
+      },
+      milestones: {
+        "0_3_tahun": [
+          "✓ Menunjukkan cause-and-effect: tekan tombol, jatuhkan benda — usia 6-12 bulan",
+          "✓ Menggenggam & melepas objek (pincer grip) — usia 9-12 bulan",
+          "✓ Berjalan stabil tanpa bantuan & naik-turun tangga — usia 12-18 bulan",
+          "✓ Kosakata 50-200+ kata; menggabungkan 2-3 kata jadi kalimat — usia 18-36 bulan",
+          "✓ Menunjukkan minat independen pada aktivitas 5-10 menit tanpa interupsi — usia 2-3 tahun"
+        ],
+        "3_6_tahun": [
+          "✓ Menulis nama sendiri & mengenal huruf alfabet — usia 4-5 tahun",
+          "✓ Membaca kata-kata sederhana (CVC: cat, dog) — usia 5-6 tahun",
+          "✓ Berhitung sampai 20+ & menyelesaikan puzzle 12-24 keping — usia 4-5 tahun",
+          "✓ Menyelesaikan konflik tanpa orang dewasa & tunggu giliran — usia 5-6 tahun",
+          "✓ Konsentrasi pada aktivitas pilihan 20-30 menit — usia 4-5 tahun"
+        ],
+        "6_9_tahun": [
+          "✓ Membaca buku chapter mandiri & menulis paragraf koheren — usia 7-8 tahun",
+          "✓ Operasi math dasar (tambah, kurang, kali, bagi) dengan pemahaman — usia 7-9 tahun",
+          "✓ Merencanakan & melaksanakan proyek sederhana dari awal sampai akhir — usia 7-9 tahun",
+          "✓ Riset independen dengan sumber beragam & catat findings — usia 8-9 tahun",
+          "✓ Bekerja dalam tim & menghargai peran masing-masing — usia 7-9 tahun"
+        ]
+      }
+    },
+    2: {
+      name: 'Cambridge',
+      slug: 'cambridge',
+      gistmom: 'Terstruktur, jelas, ada milestone. Anak tahu target & Ibu tahu progress.',
+      whatismom: 'Cambridge = kurikulum terstruktur dengan tujuan jelas. Anak tahu harus capai apa (baca, hitung, bahasa). Ibu punya milestone untuk tracking. Cocok kalau Ibu suka terukur & goals-driven.',
+      tips: [
+        { title: '📅 Buat jadwal harian yang konsisten', content: 'Pagi: 30 menit structured learning (membaca, hitung). Siang: free play. Sore: outdoor/aktivitas keluarga. Konsistensi > lama-lamaan.' },
+        { title: '✅ Track milestone', content: 'Bulan pertama: Dina hapal huruf A-M. Bulan kedua: A-Z. Lihat progress, celebrate kecil-kecilan. Screenshot/foto untuk dokumentasi.' },
+        { title: '🎯 Pilih 1 fokus per minggu', content: 'Minggu ini: belajar nomor 1-10. Minggu depan: 1-20. Jangan overload. Quality > quantity.' },
+        { title: '🏆 Motivasi via achievement', content: 'Dina berhasil baca kata "mama"? "Wow! Ibu bangga sama Dina!" Reward bukan mainan—bisa main extra 15 menit atau special time.' }
+      ],
+      qasom: [
+        { q: 'Takut metode Cambridge terlalu formal?', a: 'Nggak perlu. Belajar sambil main tetap seru. Baca sambil mainan, hitung sambil masak, bicarain bahasa Inggris sambil jalan. Tetap menyenangkan.' },
+        { q: 'Dina belum ready akademik?', a: 'Cambridge bisa dimulai saat anak siap. Untuk 3-4 tahun bisa focus di bahasa (dengar cerita, repetisi).' },
+        { q: 'Berapa lama until Dina bisa baca lancar?', a: '3-6 bulan untuk basic (mengenali huruf). 1-1.5 tahun untuk fasih & comprehend.' }
+      ],
+      modul_key_points: [
+        "🤔 Dorong 'mengapa?' setiap hari — anak belajar berpikir, bukan hafal jawaban",
+        "📚 Baca bersama tanpa jawaban siap: tanya 'Apa yang terjadi selanjutnya?' biarkan anak prediksi",
+        "🎯 Growth mindset > IQ: 'Kamu terasa stuck tapi tetap coba = otakmu berkembang' vs 'Kamu pintar'",
+        "🔍 Sediakan material terbuka (bahan dapur, balok, air) bukan step-by-step craft — 'Apa yang bisa dibuat?'",
+        "🎨 Kreativitas adalah keterampilan: kombinasi ide unik (musik + memasak?) latih otak berbeda",
+        "💭 Izinkan 'kegagalan produktif' — learning terbaik dari coba-error, bukan instruksi sempurna",
+        "🗣️ Diskusi keluarga regular: modelkan mendengar aktif dan argumen logis tanpa penilaian",
+        "⚡ Batasi 4–5 jam sekolah aktif, sisanya eksplorasi bebas — fokus kualitas bukan jam"
+      ],
+      jadwal_checklist: {
+        "0_3_tahun": {
+          pagi: [
+            "06:30 — Bangun & rutinitas mandiri (pilih baju, mandi)",
+            "07:00 — Sarapan + naming vocabulary (warna, tekstur makanan)",
+            "07:30 — Inquiry Play sensori (sorting, matching, water table)"
+          ],
+          siang: [
+            "09:00 — Outdoor observation + pertanyaan terbuka",
+            "10:00 — Creative Play: seni, musik, finger painting",
+            "11:30 — Makan siang + diskusi rasa & bahan"
+          ],
+          sore: [
+            "13:30 — Wake up + Investigation Play (puzzle, stacking, cause-effect)",
+            "14:45 — Outdoor free play (gross motor)",
+            "15:30 — Read aloud 3–4 buku + tanya-jawab cerita"
+          ]
+        },
+        "3_6_tahun": {
+          pagi: [
+            "06:30 — Morning routine + morning question (pelajaran hari ini tentang apa?)",
+            "07:00 — Sarapan + discussion meaningful",
+            "07:30 — Literacy Block: phonics, membaca kata sederhana"
+          ],
+          siang: [
+            "08:15 — Numeracy Block: eksplorasi matematika (bukan drill)",
+            "09:20 — Inquiry Project topik minggu ini (hands-on investigation)",
+            "10:10 — Outdoor Science & PE (observasi alam, eksperimen)"
+          ],
+          sore: [
+            "11:50 — Makan siang + diskusi topik",
+            "12:20 — Quiet time membaca pilihan sendiri",
+            "14:00 — Free play kreatif, tidak terstruktur"
+          ]
+        },
+        "6_9_tahun": {
+          pagi: [
+            "06:30 — Morning routine + planning hari ('Mau eksplor apa hari ini?')",
+            "07:00 — Sarapan + news discussion (berita sederhana, tanya 'mengapa?')",
+            "07:30 — English/Bahasa Block (bukan grammar rules, tapi cerita & diskusi)"
+          ],
+          siang: [
+            "08:30 — Mathematics Block (problem solving multi-langkah, bukan drill)",
+            "09:45 — Science/Social Studies investigation (phenomenon-based)",
+            "10:45 — PE + outdoor learning (keseimbangan, kolaborasi)"
+          ],
+          sore: [
+            "12:15 — Independent reading pilihan sendiri",
+            "13:00 — Investigation Project jangka panjang (1–2 minggu per topik)",
+            "14:30 — Free exploration atau hobi (coding, seni, debat keluarga)"
+          ]
+        }
+      },
+      milestones: {
+        "0_3_tahun": [
+          "✓ Mengajukan 'mengapa?' aktif & menunjukkan minat cause-effect — usia 12-18 bulan",
+          "✓ Kosakata 50+ kata, mulai kalimat 2–3 kata, pincer grip solid — usia 18-24 bulan",
+          "✓ Bisa mengikuti instruksi 2-langkah, mencocokkan warna/bentuk, konsentrasi 10 menit — usia 24-36 bulan"
+        ],
+        "3_6_tahun": [
+          "✓ Curiosity tinggi, bisa punya opini & membela argumen (walau sederhana) — usia 3-4 tahun",
+          "✓ Bisa membaca kata CVC (cat, dog), menulis nama sendiri, berlari stabil — usia 4-5 tahun",
+          "✓ Bisa cerita deret peristiwa logis, berpikir multi-perspective, diskusi 5–10 menit — usia 5-6 tahun"
+        ],
+        "6_9_tahun": [
+          "✓ Membaca fluent, berpikir logis multi-langkah, bisa argumen pake bukti — usia 6-7 tahun",
+          "✓ Phenomenon-based learning natural, debat keluarga tanpa agresi, relaksasi emosi mandiri — usia 7-8 tahun",
+          "✓ Menulis paragraf koheren, timeline sejarah, problem-solving kompleks, growth mindset solid — usia 8-9 tahun"
+        ]
+      }
+    },
+    3: {
+      name: 'Finlandia',
+      slug: 'cambridge',
+      gistmom: 'Terstruktur, jelas, ada milestone. Anak tahu target & Ibu tahu progress.',
+      whatismom: 'Cambridge = kurikulum terstruktur dengan tujuan jelas. Anak tahu harus capai apa (baca, hitung, bahasa). Ibu punya milestone untuk tracking. Cocok kalau Ibu suka terukur & goals-driven.',
+      tips: [
+        { title: '📅 Buat jadwal harian yang konsisten', content: 'Pagi: 30 menit structured learning (membaca, hitung). Siang: free play. Sore: outdoor/aktivitas keluarga. Konsistensi > lama-lamaan.' },
+        { title: '✅ Track milestone', content: 'Bulan pertama: Dina hapal huruf A-M. Bulan kedua: A-Z. Lihat progress, celebrate kecil-kecilan. Screenshot/foto untuk dokumentasi.' },
+        { title: '🎯 Pilih 1 fokus per minggu', content: 'Minggu ini: belajar nomor 1-10. Minggu depan: 1-20. Jangan overload. Quality > quantity.' },
+        { title: '🏆 Motivasi via achievement', content: 'Dina berhasil baca kata "mama"? "Wow! Ibu bangga sama Dina!" Reward bukan mainan—bisa main extra 15 menit atau special time.' }
+      ],
+      qasom: [
+        { q: 'Takut metode Cambridge terlalu formal?', a: 'Nggak perlu. Belajar sambil main tetap seru. Baca sambil mainan, hitung sambil masak, bicarain bahasa Inggris sambil jalan. Tetap menyenangkan.' },
+        { q: 'Dina belum ready akademik?', a: 'Cambridge bisa dimulai saat anak siap. Untuk 3-4 tahun bisa focus di bahasa (dengar cerita, repetisi).' },
+        { q: 'Berapa lama until Dina bisa baca lancar?', a: '3-6 bulan untuk basic (mengenali huruf). 1-1.5 tahun untuk fasih & comprehend.' }
+      ]
+    },
+    3: {
+      name: 'Finlandia',
+      slug: 'finlandia',
+      gistmom: 'Banyak main, minim akademik (sampai 7 tahun), happiness first.',
+      whatismom: 'Finlandia: "Anak yang bahagia itu belajar lebih baik." Jadi fokus bukan di akademik super early, tapi di bermain bebas, imajinasi, & karakter. Cocok untuk anak yang stressed atau high-sensitivity.',
+      tips: [
+        { title: '🌳 Outdoor time > screen time', content: 'Setiap hari minimal 2-3 jam outdoor. Main tanah, pasir, air, pohon. Ini di mana anak belajar terbaik.' },
+        { title: '🚫 Tolak pressure', content: 'Jangan bilang "Dina harus bisa baca umur 5 tahun." Suka main sendiri 2 jam? Amazing. Ini cara dia belajar self-regulation.' },
+        { title: '📚 Cerita > pelajaran formal', content: 'Bukan flash card. Cerita sebelum tidur, cerita di mobil. Anak dengar, imajinasi, tanya, belajar.' },
+        { title: '👫 Bermain dengan teman ≈ belajar', content: 'Playdate > les piano. Main sama teman itu di mana anak belajar: negosiasi, empati, share, solve conflict.' }
+      ],
+      qasom: [
+        { q: 'Takut Dina ketinggalan akademik?', a: 'Nggak. Research Finlandia: anak yang ditekankan akademik di 5 tahun nggak lebih unggul di 15 tahun. Malah happiness & confidence di awal lebih strong predictor of success.' },
+        { q: 'Gimana dengan persiapan SD?', a: 'Saat mau masuk SD, gradual introduce struktur. Tapi 5-6 tahun fokus bermain dulu.' },
+        { q: 'Ibu sibuk, gimana plan outdoor 2-3 jam?', a: 'Nggak perlu structured activities. Taman kota, playground, di rumah main tanah di pot. Fleksibel. Quality > fancy.' }
+      ],
+      modul_key_points: [
+        "🌳 Outdoor 45–60 menit SETIAP hari — cuaca apapun: main bebas, observasi alam, gerak bebas",
+        "⏰ Sekolah singkat (4–5 jam aktif) > stres; siswa konsentrasi lebih baik, ingatan lebih kuat",
+        "🎯 Tidak ada ujian standar sampai usia 16 — evaluasi via observasi guru + penilaian formatif",
+        "🎨 Pembelajaran berbasis fenomena (phenomenon-based): satu topik = gabung seni, sains, bahasa, gerak",
+        "😊 Kesejahteraan > nilai — anak bahagia belajar lebih efektif dari anak stres & kompetitif",
+        "🧩 Guru punya autonomy penuh: bukan ikut kurikulum kaku, tapi sesuai kebutuhan anak unik",
+        "📚 Membaca bukan dipaksa: anak dibaca FOR (cerita, eksplorasi) bukan drill phonics",
+        "🤝 Keseimbangan keluarga: hari pendek kasih waktu ortu-anak, aktivitas luar sekolah"
+      ],
+      jadwal_checklist: {
+        "0_3_tahun": {
+          pagi: [
+            "07:00 — Bangun natural (no rushing) + sarapan tenang keluarga",
+            "07:45 — Self-care ritual (mandi, pakai baju mandiri) + free play pagi",
+            "08:30 — Outdoor time panjang (30–45 menit: main tanah, observasi, main bebas)"
+          ],
+          siang: [
+            "10:00 — Snack + istirahat ringkas",
+            "10:20 — Sensory play atau musik (bukan lesson, tapi eksplorasi suara & tekstur)",
+            "11:00 — Membaca bersama + practical life (bantu rumah: cuci, masak sederhana)"
+          ],
+          sore: [
+            "12:00 — Makan siang keluarga (diskusi santai)",
+            "12:30 — Tidur siang natural (no clock)",
+            "14:00 — Free play kreatif (tidak terstruktur sepenuhnya)"
+          ]
+        },
+        "3_6_tahun": {
+          pagi: [
+            "07:00 — Bangun natural + sarapan + free play pagi (no rush)",
+            "08:00 — Outdoor play & nature (30–60 menit: climbing, sliding, observasi)",
+            "09:30 — Learn through play (permainan edukatif tapi tidak terasa seperti sekolah)"
+          ],
+          siang: [
+            "10:15 — Snack + membaca cerita (untuk enjoyment, bukan comprehension drill)",
+            "10:45 — Seni & musik (fingerpainting, bernyanyi, alat musik, tidak ada 'benar/salah')",
+            "11:30 — Practical life (memasak, berkebun, membersihkan — anak belajar life skills)"
+          ],
+          sore: [
+            "12:00 — Makan siang santai + percakapan keluarga",
+            "12:30 — Waktu tenang (tidur siang atau quiet reading, tidak dipaksa)",
+            "14:30 — Outdoor sore (bermain lagi, eksplorasi alam)"
+          ]
+        },
+        "6_9_tahun": {
+          pagi: [
+            "07:00 — Bangun santai + sarapan tanpa terburu-buru",
+            "07:45 — Belajar Blok 1 (Literasi/Bahasa: diskusi teks, bukan grammar drill) — 60 menit",
+            "08:45 — Outdoor break wajib (keseimbangan otak-gerak)"
+          ],
+          siang: [
+            "09:00 — Belajar Blok 2 (Matematika: problem-solving, bukan drill) — 45 menit",
+            "09:45 — Outdoor break (15 menit, wajib)",
+            "10:00 — Phenomenon-Based Learning (1 topik = sain + seni + bahasa gabung, eksplorasi mendalam)"
+          ],
+          sore: [
+            "11:00 — Outdoor panjang + PE (olahraga, nature exploration, gerak bebas)",
+            "12:00 — Makan siang santai",
+            "12:30 — Waktu tenang (baca pilihan, relaksasi, bukan 'study time')"
+          ]
+        }
+      },
+      milestones: {
+        "0_3_tahun": [
+          "✓ Minat cause-effect kuat, menuang air tanpa banyak tumpah, naik-turun tangga pegangan — usia 12-18 bulan",
+          "✓ Berbagi mainan mulai konsisten, kemampuan eksplorasi alam terbuka meningkat — usia 18-24 bulan",
+          "✓ Bisa ikuti rutinitas sehari-hari (bangun, mandi, makan) dengan iming ringan, bahasa berkembang natural — usia 24-36 bulan"
+        ],
+        "3_6_tahun": [
+          "✓ Belajar melalui bermain NATURAL (bukan forced), minat membaca cerita tinggi, kemandirian dressing/hygiene — usia 3-4 tahun",
+          "✓ Bisa menulis nama sendiri, bermain cooperative dengan teman (turn-taking), outdoor skill solid — usia 4-5 tahun",
+          "✓ Ekspresikan emosi dengan kata-kata, baca kata sederhana (CVC), phenomenon learning natural — usia 5-6 tahun"
+        ],
+        "6_9_tahun": [
+          "✓ Berpikir logis & problem-solving multi-langkah, phenomenon-based learning alami, outdoor independen aman — usia 6-7 tahun",
+          "✓ Kelola emosi negatif tanpa agresi, menulis deret peristiwa koheren, minat membaca tinggi — usia 7-8 tahun",
+          "✓ Berpikir kritik & evaluasi argumen sendiri, phenomenon-based projects jangka panjang, tanda baca solid — usia 8-9 tahun"
+        ]
+      }
+    },
+    4: {
+      name: 'Reggio Emilia',
+      slug: 'reggio-emilia',
+      gistmom: 'Anak jadi peneliti. Eksplorasi lewat proyek, seni, kolaborasi.',
+      whatismom: 'Reggio: Anak adalah peneliti alami yang pengin explore & create. Metode ini suka project-based (misalnya: "pelajari rumah"—gambar, desain, bangun ulang). Anak & Ibu kolaborasi. Cocok untuk anak kreatif-ingin-explore.',
+      tips: [
+        { title: '🔍 Mulai dari curiosity Dina', content: 'Dina tertarik sama kucing? Jangan langsung beliin buku sains. Tanya: "Kamu mau pelajarin apa dari kucing?" Dari sini lahir proyek.' },
+        { title: '🎨 Provoke dengan seni', content: 'Kasih kertas, warna, material (kain, pasir, batu). "Apa yang Dina bisa bikin?" Minimal guidance, maksimal eksplorasi. Hasilnya nggak harus bagus—proses yang penting.' },
+        { title: '👥 Kolaborasi dengan Ibu', content: 'Nggak Ibu ngajarin, tapi Ibu jadi co-explorer. "Wah, idea Dina bagus! Coba kita lanjutin gimana?" Itu meaningful collaboration.' },
+        { title: '📸 Dokumentasi (foto/video)', content: 'Foto proses Dina. Sewaktu-waktu tunjukkan: "Lihat, dulu kamu bikin gini. Sekarang mau retry berbeda?" Memory & reflection.' }
+      ],
+      qasom: [
+        { q: 'Takut nggak ada struktur akademik?', a: 'Akademik ada, cuma nggak isolated. Belajar matematika lewat arsitektur, bahasa lewat narasi proyek, sains lewat observasi. Holistik.' },
+        { q: 'Berapa lama satu proyek?', a: '2 minggu sampai 2 bulan. Tergantung Dina. Kalau mulai bosan, wrap up & mulai baru.' },
+        { q: 'Ini cocok untuk semua tipe anak?', a: 'Terutama untuk anak yang visual, kreatif, atau yang nggak suka aturan ketat. Anak independent juga suka soalnya dia jadi expert di topik dia pilih.' }
+      ]
+    },
+    5: {
+      name: 'Waldorf',
+      slug: 'waldorf',
+      gistmom: 'Holistik: seni, alam, ritme harian. Anak berkembang emosi & imajinasi sebelum akademik.',
+      whatismom: 'Waldorf: Education adalah seni. Anak perlu ritme, koneksi alam, seni, dan storytelling. Minim teknologi. Cocok untuk anak yang sensitive, artistic, atau yang butuh routine.',
+      tips: [
+        { title: '🌙 Ciptakan ritme harian', content: 'Pagi: aktivitas aktif (gerak, lagu). Tengah hari: quiet time (cerita, melukis). Sore: bermain luar. Konsisten. Anak merasa aman dengan ritme.' },
+        { title: '🎵 Musik & lagu everywhere', content: 'Pagi nyanyian, sambil makan lagu, sebelum tidur lagu. Nggak perlu les musik formal. Cukup nyanyian keluarga, instrumen sederhana, senang aja.' },
+        { title: '🎨 Seni = bahasa Dina', content: 'Bukan flash card, tapi lukisan, bentuk play dough, gerak tari. Dari sini Dina express diri & belajar.' },
+        { title: '📖 Cerita & dongeng', content: 'Cerita yang sama diulang berkali-kali (Dina minta), yang isinya mengandung pelajaran (moral, nature, fantasi). Bukan cerita random.' }
+      ],
+      qasom: [
+        { q: 'Gimana dengan screen time?', a: 'Waldorf prefer minimal. Bukan nggak sama sekali, tapi dibatasi. Screen nanti saat lebih besar. Sekarang audio (musik), visual (seni), tactile (bermain).' },
+        { q: 'Ini butuh sekolah Waldorf khusus?', a: 'Nggak. Prinsip bisa terapin di rumah. Sekolah Waldorf cuma untuk yang pengen full immersion.' },
+        { q: 'Cocok untuk anak yang nggak artistik?', a: 'Semua anak punya kreativitas. Mungkin Dina lebih suka gerak, musik, atau cerita. Waldorf akomodasi semua.' }
+      ]
+    },
+    6: {
+      name: 'Singapore Math',
+      slug: 'singapore-math',
+      gistmom: 'Belajar matematika BENAR dari anak. Konkret → visual → abstrak.',
+      whatismom: 'Singapore Math: anak belajar hitung lewat benda nyata dulu (mainan, jari, buah), terus gambar/visual, terus angka. Jadi anak PAHAM, bukan hafal. Cocok untuk anak yang suka logika.',
+      tips: [
+        { title: '🎲 Gunakan benda nyata', content: 'Jangan langsung "1+1=2". Tapi "Dina punya 1 jeruk + Kakak punya 1 jeruk = berapa?" Dengan jeruk di tangan. Anak langsung paham.' },
+        { title: '🖼️ Gambar sebelum angka', content: 'Dina belajar hitung 10. Jangan langsung tulis "10". Gambar 10 lingkaran, 10 dot, terus abstrak jadi angka "10".' },
+        { title: '🔢 Belajar bilang 0-10 dulu', content: 'Jangan loncat ke matematika rumit. Fundamental penting. Bilang, hitung jari, hitung kancing, hitung langkah.' },
+        { title: '🧩 Gunakan problem-solving', content: 'Nggak "hitunglah 3+2". Tapi "kita punya 3 permen, terus dikasih 2. Berapa sekarang?" Real-world context.' }
+      ],
+      qasom: [
+        { q: 'Umur berapa mulai Singapore Math?', a: '3-4 tahun sudah bisa mulai bilang, hitung jari. Nggak harus formal — santai aja, lewat bermain.' },
+        { q: 'Bagus untuk anak yang nggak suka hitung?', a: 'Justru ini yang bagus. Anak nggak suka abstrak, maka concrete dulu. Lewat mainan, santai, terus dimengerti.' },
+        { q: 'Perlu lebih banyak practice?', a: 'Quality > quantity. 10 menit meaningful (dengan benda) > 30 menit hafalan. Anak paham, confident, siap lanjut.' }
+      ],
+      modul_key_points: [
+        "🎯 Concrete→Pictorial→Abstract: touch it, draw it, then numbers",
+        "📊 Bar models show relationships—great untuk word problems",
+        "🧠 'Mastery before moving on'—depth beats rushing ahead",
+        "🔢 Number sense & part-whole: ajar anak WHY bukan hanya HOW",
+        "📈 Spiral review keeps old skills fresh & connected",
+        "💭 Tanya 'kenapa?' to build reasoning, bukan cuma calculator kids",
+        "🏠 Real-world contexts (masak, belanja) bikin math stick",
+        "🤝 Strategic thinking = flexible problem-solving approach"
+      ],
+      jadwal_checklist: {
+        "0_3_tahun": {
+          pagi: [
+            "06:30 — Sensory exploration dengan household items",
+            "07:00 — Sorting & pattern games sambil makan",
+            "08:30 — Counting songs & number chants",
+            "09:15 — Outdoor play: big movements, spatial sense"
+          ],
+          siang: [
+            "10:00 — Concrete play: blocks, water, sand",
+            "11:00 — Storytelling dengan counting elements",
+            "11:45 — Snack time math (sharing, portions)",
+            "12:00 — Rest & quiet time"
+          ],
+          sore: [
+            "13:30 — Free play dengan manipulatives",
+            "14:30 — Songs & finger plays",
+            "15:30 — Family cuddle time & bedtime routine"
+          ]
+        },
+        "3_6_tahun": {
+          pagi: [
+            "06:30 — Number routines (calendar, weather count)",
+            "07:15 — Concrete manipulatives (beads, blocks, Cuisenaire)",
+            "08:30 — CPA progression activities",
+            "09:15 — Outdoor exploration & spatial games"
+          ],
+          siang: [
+            "10:30 — Pattern recognition (visual & sound patterns)",
+            "11:15 — Shape exploration & sorting games",
+            "12:00 — Practical cooking math (measuring, mixing)",
+            "12:45 — Lunch & transition"
+          ],
+          sore: [
+            "13:00 — Games: dice, dominoes, card matching",
+            "14:00 — Outdoor play & movement",
+            "15:00 — Family time & wind-down"
+          ]
+        },
+        "6_9_tahun": {
+          pagi: [
+            "06:30 — Mental math warmup & quick games",
+            "07:15 — Bar model drawing untuk word problems",
+            "08:45 — Guided problem-solving (step by step)",
+            "09:35 — Independent practice dengan feedback"
+          ],
+          siang: [
+            "11:20 — Concept deepening dengan real contexts",
+            "12:00 — Self-checking & peer teaching",
+            "12:30 — Application problems (shopping, cooking, time)",
+            "12:45 — Lunch & break"
+          ],
+          sore: [
+            "13:40 — Challenge problems & extensions",
+            "14:30 — Enrichment (geometry, patterns, logic)",
+            "15:00 — Free exploration & play time"
+          ]
+        }
+      },
+      milestones: {
+        "0_3_tahun": [
+          "✓ Recognizes 'one' vs 'many' dalam daily life — usia 12-18 bulan",
+          "✓ Counts to 3-5, stacks 5+ objects, shows interest in sorting — usia 18-24 bulan",
+          "✓ Counts to 10, understands big/small, matches pairs — usia 24-36 bulan",
+          "✓ Sorts by color/size, follows 1-2 step instructions, basic pattern play — usia 30-36 bulan"
+        ],
+        "3_6_tahun": [
+          "✓ Counts to 20, writes numbers 1-10, understands 'more/less' — usia 3-4 tahun",
+          "✓ Reads numbers to 20, simple addition (5+), draws shapes — usia 4-5 tahun",
+          "✓ Counts past 50, uses bar models in drawing, understands part-whole — usia 5-6 tahun",
+          "✓ Single-digit addition/subtraction fluently, tells time (half-hour) — usia 6 tahun"
+        ],
+        "6_9_tahun": [
+          "✓ Two-digit addition/subtraction dengan models, solves simple word problems — usia 6-7 tahun",
+          "✓ Multiplication/division concepts using bar models, understands fractions — usia 7-8 tahun",
+          "✓ Multi-step word problems independently, bar models tanpa guidance — usia 8-9 tahun",
+          "✓ Explains reasoning in problem-solving, flexible computation methods — usia 9 tahun"
+        ]
+      }
+    },
+    4: {
+      name: 'Reggio Emilia',
+      slug: 'reggio-emilia',
+      gistmom: 'Anak jadi peneliti. Eksplorasi lewat proyek, seni, kolaborasi.',
+      whatismom: 'Reggio: Anak adalah peneliti alami yang pengin explore & create. Metode ini suka project-based (misalnya: "pelajari rumah"—gambar, desain, bangun ulang). Anak & Ibu kolaborasi. Cocok untuk anak kreatif-ingin-explore.',
+      tips: [
+        { title: '🔍 Mulai dari curiosity Dina', content: 'Dina tertarik sama kucing? Jangan langsung beliin buku sains. Tanya: "Kamu mau pelajarin apa dari kucing?" Dari sini lahir proyek.' },
+        { title: '🎨 Provoke dengan seni', content: 'Kasih kertas, warna, material (kain, pasir, batu). "Apa yang Dina bisa bikin?" Minimal guidance, maksimal eksplorasi. Hasilnya nggak harus bagus—proses yang penting.' },
+        { title: '👥 Kolaborasi dengan Ibu', content: 'Nggak Ibu ngajarin, tapi Ibu jadi co-explorer. "Wah, idea Dina bagus! Coba kita lanjutin gimana?" Itu meaningful collaboration.' },
+        { title: '📸 Dokumentasi (foto/video)', content: 'Foto proses Dina. Sewaktu-waktu tunjukkan: "Lihat, dulu kamu bikin gini. Sekarang mau retry berbeda?" Memory & reflection.' }
+      ],
+      qasom: [
+        { q: 'Takut nggak ada struktur akademik?', a: 'Akademik ada, cuma nggak isolated. Belajar matematika lewat arsitektur, bahasa lewat narasi proyek, sains lewat observasi. Holistik.' },
+        { q: 'Berapa lama satu proyek?', a: '2 minggu sampai 2 bulan. Tergantung Dina. Kalau mulai bosan, wrap up & mulai baru.' },
+        { q: 'Ini cocok untuk semua tipe anak?', a: 'Terutama untuk anak yang visual, kreatif, atau yang nggak suka aturan ketat. Anak independent juga suka soalnya dia jadi expert di topik dia pilih.' }
+      ],
+      modul_key_points: [
+        "🎨 Eksplorasi terbuka—anak memimpin, ortu mengamati. Tidak ada 'contoh' yang harus ditiru",
+        "📸 Dokumentasi is your superpower. Foto/video keseharian anak, diskusi bersama di sore hari",
+        "🎁 Loose parts everywhere: kain sutra, balok kayu, material alam—main tanpa tujuan spesifik",
+        "🖌️ Atelier (studio art) setiap hari—melukis, clay, kolase. Seni = proses eksplorasi bukan hasil",
+        "🌿 Outdoor = proyek lab. Kumpulin benda alam, observasi serangga, cuaca—jadi materi proyek",
+        "🔵 Circle time pagi: cerita pendek, lagu, diskusi singkat soal rencana hari. Ritme jelas, fleksibel",
+        "🖼️ Anak presentasi hasil proyeknya (gallery walk/display). Rasa bangga + apresiasi teman penting",
+        "💬 No jargon di rumah: pakai bahasa ibu, santai, sering ngobrol soal apa yg dia amati hari ini"
+      ],
+      jadwal_checklist: {
+        "0_3_tahun": {
+          pagi: [
+            "06:30 — Bangun & refleksi diri di cermin",
+            "07:00 — Sarapan + eksplorasi tekstur makanan",
+            "07:30 — Material terbuka exploration (loose parts, kain)",
+            "09:00 — Outdoor exploration (benda alam, observasi detail)"
+          ],
+          siang: [
+            "10:00 — Snack + dokumentasi (foto hasil kerja)",
+            "10:20 — Seni ekspresif bebas (cat, clay, kolase)",
+            "11:00 — Musik & gerakan, lagu sederhana",
+            "11:20 — Makan siang bersama (sosial + sensorik)"
+          ],
+          sore: [
+            "12:00 — Tidur siang (lingkungan tenang)",
+            "13:30 — Free exploration outdoor (loose parts, sensory bins)",
+            "14:30 — Membaca + storytelling (boneka, cerita lisan)",
+            "15:00 — Outdoor sore + dokumentasi bersama anak"
+          ]
+        },
+        "3_6_tahun": {
+          pagi: [
+            "06:30 — Bangun & self-care rutinitas mandiri",
+            "07:00 — Sarapan + morning meeting (apa yang ingin dieksplor?)",
+            "07:30 — Proyek eksplorasi fase 1: observasi, gambar, tanya-tanya",
+            "08:30 — Atelier: ekspresi seni bebas (lukis, sculpt, kolase)"
+          ],
+          siang: [
+            "10:15 — Outdoor investigation terkait proyek (serangga, tanaman, cuaca)",
+            "10:35 — Snack + dokumentasi (review foto hasil kerja bersama)",
+            "10:50 — Proyek eksplorasi fase 2: riset, diskusi, representasi baru",
+            "11:20 — Makan siang sosial + istirahat"
+          ],
+          sore: [
+            "12:45 — Construction & building (balok, kardus, material daur ulang)",
+            "13:30 — Storytelling & drama (boneka, role play)",
+            "14:00 — Dokumentasi proyek (anak + ortu review, display, diskusi)",
+            "14:15 — Free play outdoor + rutinitas malam"
+          ]
+        },
+        "6_9_tahun": {
+          pagi: [
+            "07:00 — Morning meeting + rencana proyek hari ini",
+            "07:45 — Literasi: reading, writing, journaling terhubung proyek",
+            "08:30 — Numeracy: math in context (ukur, hitung, grafik)",
+            "09:15 — Outdoor break + snack"
+          ],
+          siang: [
+            "09:30 — Proyek investigasi panjang (riset, eksperimen, field work)",
+            "11:00 — Atelier: representasi temuan (seni, model 3D, poster, drama)",
+            "11:45 — Makan siang + independent reading",
+            "12:15 — Dokumentasi & presentasi siap"
+          ],
+          sore: [
+            "12:45 — Outdoor + PE (olahraga, nature journal, berkebun)",
+            "14:00 — Music / drama / creative expression (pilihan anak)",
+            "14:30 — Free time outdoor + bermain bebas",
+            "16:00 — Rutinitas malam (mandi, makan, cerita keluarga)"
+          ]
+        }
+      },
+      milestones: {
+        "0_3_tahun": [
+          "✓ Eksplorasi material terbuka 10+ menit. Mulai tunjuk minat topik favorit — usia 18-24 bulan",
+          "✓ Dokumentasi sendiri lewat simbol. Suka lihat foto aktivitas sendiri — usia 24-30 bulan",
+          "✓ Investigasi mendalam: tanya 'kenapa', coba ulang eksperimen — usia 30-36 bulan"
+        ],
+        "3_6_tahun": [
+          "✓ Proyek eksplorasi 3-4 minggu. Ekspresikan ide via seni, cerita, gerak — usia 3-4 tahun",
+          "✓ Presentasi ke keluarga tanpa malu. Review & display karya sendiri — usia 4-5 tahun",
+          "✓ Proyek kompleks: riset → representasi. Tanya pertanyaan investigatif — usia 5-6 tahun"
+        ],
+        "6_9_tahun": [
+          "✓ Deep dive 4-6 minggu per topik. Dokumentasi proses (tulisan + gambar) — usia 6-7 tahun",
+          "✓ Riset independen: sumber multiple, catat observasi sistematis — usia 7-8 tahun",
+          "✓ Proyek publik: pameran, presentasi, publikasi sederhana — usia 8-9 tahun"
+        ]
+      }
+    },
+    5: {
+      name: 'Waldorf',
+      slug: 'waldorf',
+      gistmom: 'Holistik: seni, alam, ritme harian. Anak berkembang emosi & imajinasi sebelum akademik.',
+      whatismom: 'Waldorf: Education adalah seni. Anak perlu ritme, koneksi alam, seni, dan storytelling. Minim teknologi. Cocok untuk anak yang sensitive, artistic, atau yang butuh routine.',
+      tips: [
+        { title: '🌙 Ciptakan ritme harian', content: 'Pagi: aktivitas aktif (gerak, lagu). Tengah hari: quiet time (cerita, melukis). Sore: bermain luar. Konsisten. Anak merasa aman dengan ritme.' },
+        { title: '🎵 Musik & lagu everywhere', content: 'Pagi nyanyian, sambil makan lagu, sebelum tidur lagu. Nggak perlu les musik formal. Cukup nyanyian keluarga, instrumen sederhana, senang aja.' },
+        { title: '🎨 Seni = bahasa Dina', content: 'Bukan flash card, tapi lukisan, bentuk play dough, gerak tari. Dari sini Dina express diri & belajar.' },
+        { title: '📖 Cerita & dongeng', content: 'Cerita yang sama diulang berkali-kali (Dina minta), yang isinya mengandung pelajaran (moral, nature, fantasi). Bukan cerita random.' }
+      ],
+      qasom: [
+        { q: 'Gimana dengan screen time?', a: 'Waldorf prefer minimal. Bukan nggak sama sekali, tapi dibatasi. Screen nanti saat lebih besar. Sekarang audio (musik), visual (seni), tactile (bermain).' },
+        { q: 'Ini butuh sekolah Waldorf khusus?', a: 'Nggak. Prinsip bisa terapin di rumah. Sekolah Waldorf cuma untuk yang pengen full immersion.' },
+        { q: 'Cocok untuk anak yang nggak artistik?', a: 'Semua anak punya kreativitas. Mungkin Dina lebih suka gerak, musik, atau cerita. Waldorf akomodasi semua.' }
+      ],
+      modul_key_points: [
+        "🌈 Ritme itu segalanya. Pagi selalu sama (bangun natural, circle, sarapan), bukan jadwal kaku jam",
+        "🌿 Material natural only: balok kayu, kain sutra, boneka kain—no plastic. Imajinasi anak ≠ disumbang",
+        "📖 Story/dongeng: guru hafal dongeng (bukan baca), cerita berkembang sesuai minat anak semester ini",
+        "✋ Head-heart-hand: main lesson cerita → anak tulis+gambar → handcraft skill (rajut, jahit)",
+        "🍂 Seasonal rhythm: perayaan musiman, warna dekorasi rumah berubah, aktivitas ikuti alam (tanam, panen)",
+        "🎵 Circle games & eurythmy: gerakan berirama, lagu pentatonik, permainan tradisional—develop movement",
+        "🎨 Wet-on-wet painting: cat air basah, tidak ada kesalahan, ekspresikan emosi via warna & gerak kuas",
+        "🕯️ Beeswax sculpting: lilin lebah alami, bentuk berkembang tangan—sensori + kreativitas tanpa 'hasil'"
+      ],
+      jadwal_checklist: {
+        "0_3_tahun": {
+          pagi: [
+            "06:30 — Bangun alami (sinar matahari masuk, nyanyian pagi ringan)",
+            "06:45 — Self-care & berpakaian (bahan alami: katun, wool)",
+            "07:00 — Sarapan bersama (meja cantik, lilin, berdoa/syukur)",
+            "07:30 — Free play imajinasi (boneka kain, balok kayu, kain sutra)"
+          ],
+          siang: [
+            "08:30 — Domestic arts: membantu rumah tangga (menyapu, melipat, mengaduk adonan)",
+            "09:00 — Garden time / nature walk (halaman: tanah, air, amati burung, berkebun)",
+            "10:00 — Snack + cerita sederhana atau nyanyian",
+            "10:20 — Watercolor / beeswax play (cat air basah atau lilin lebah)"
+          ],
+          sore: [
+            "12:00 — Tidur siang (lingkungan tenang, dongeng sebelum tidur)",
+            "13:30 — Bangun + snack sore (transisi gentle)",
+            "14:00 — Free play outdoor (alam, pasir, air, bermain bebas)",
+            "15:00 — Puppet show / storytelling (boneka tangan, cerita sederhana)"
+          ]
+        },
+        "3_6_tahun": {
+          pagi: [
+            "07:00 — Bangun + circle time pagi (nyanyian, verse, gerakan ritmis)",
+            "07:20 — Sarapan bersama (makanan hangat, lilin, doa)",
+            "07:45 — Free creative play (boneka kain, balok kayu, kain sutra, selendang)",
+            "09:00 — Domestic arts (Senin: masak, Selasa: jahit, Rabu: berkebun—ritme mingguan)"
+          ],
+          siang: [
+            "09:45 — Garden & nature (bermain di alam, berkebun, amati cuaca)",
+            "10:45 — Snack + story circle (dongeng tanpa buku, guru hafal)",
+            "11:15 — Wet-on-wet painting / beeswax (cat air basah atau lilin lebah)",
+            "11:45 — Ring game + musik (permainan lingkaran, lagu pentatonik, eurythmy)"
+          ],
+          sore: [
+            "12:30 — Rest / fairy tale (dongeng → istirahat/tidur siang)",
+            "13:30 — Outdoor afternoon (bermain bebas di luar)",
+            "14:30 — Handcraft sederhana (finger knitting, kolase alam, boneka)",
+            "15:00 — Wind down (transisi tenang) → mandi + makan malam + bedtime verse"
+          ]
+        },
+        "6_9_tahun": {
+          pagi: [
+            "07:00 — Morning verse + circle (verse pembuka, gerakan ritmis, nyanyian)",
+            "07:20 — Sarapan (makanan hangat, ritme pagi)",
+            "07:45 — Main lesson storytelling (cerita sebagai metode: math via pedagang, sains via petualangan)",
+            "09:15 — Main lesson book (anak menulis & menggambar pelajaran di buku utama—karya seni)"
+          ],
+          siang: [
+            "09:45 — Outdoor + movement (berlari, permainan tradisional, eurythmy, berkebun)",
+            "10:30 — Practice session: review (latihan materi, permainan, atau diskusi)",
+            "11:00 — Handcraft block (rajutan, jahit, woodworking—head-heart-hand)",
+            "11:45 — Makan siang + istirahat + story chapter"
+          ],
+          sore: [
+            "12:45 — Music + recorder (rekorder atau instrumen lain, paduan suara)",
+            "13:15 — Painting / drawing (wet-on-wet, form drawing, ilustrasi buku utama)",
+            "13:45 — Foreign language play (bahasa asing via lagu, permainan, cerita)",
+            "14:00 — Free play + outdoor → rutinitas malam (mandi, makan, cerita chapter, tidur)"
+          ]
+        }
+      },
+      milestones: {
+        "0_3_tahun": [
+          "✓ Ikut ritme harian: bangun teratur, sarapan bersama, tidur konsisten — usia 12-24 bulan",
+          "✓ Bermain imajinasi 15+ menit dengan boneka/balok kayu—tanpa arahan — usia 24-30 bulan",
+          "✓ Mendengarkan dongeng & merespons emosi cerita. Tunjuk minat musim — usia 30-36 bulan"
+        ],
+        "3_6_tahun": [
+          "✓ Circle time 20+ menit: lagu, gerakan, fokus. Free play 75+ menit — usia 3-4 tahun",
+          "✓ Main lesson book mulai: tulisan + gambar sendiri. Wet-on-wet 20+ menit — usia 4-5 tahun",
+          "✓ Handcraft skill: menjahit, merajut dasar. Dongeng chapter diingat & cerita ulang — usia 5-6 tahun"
+        ],
+        "6_9_tahun": [
+          "✓ Main lesson 90+ menit fokus. Buku utama mulai indah (tulis+gambar) — usia 6-7 tahun",
+          "✓ Handcraft skill berkembang: woodwork, jahit lebih kompleks, rajut pattern — usia 7-8 tahun",
+          "✓ Main lesson book berkualitas tinggi. Instrumen musik dasar (recorder) — usia 8-9 tahun"
+        ]
+      }
+    }
+  };
+
+  function renderRecommendation(rec) {
+    const info = METHODS[rec.method_id];
+    if (!info) return '';
+    
+    return `
+      <div class="recommendation">
+        <div class="rec-header" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open')">
+          <div class="rec-rank">${rec.rank === 1 ? '🥇' : rec.rank === 2 ? '🥈' : '🥉'}</div>
+          <div class="rec-title">
+            <div class="rec-name">${info.name}</div>
+            <div class="rec-score">Cocok: ${rec.score}% — ${info.gistmom}</div>
+          </div>
+          <div class="rec-toggle">▼</div>
+        </div>
+        
+        <div class="rec-content">
+          <div class="mom-box">
+            <strong>Gist:</strong> ${info.whatismom}
+          </div>
+          
+          <div style="margin-bottom:1.5rem;">
+            <strong style="color:var(--primary); display:block; margin-bottom:1rem;">🎯 4 Tips Praktis Minggu Ini:</strong>
+            ${info.tips.map(t => `
+              <div class="tip-card">
+                <div class="tip-title">${t.title}</div>
+                <div class="tip-content">${t.content}</div>
+              </div>
+            `).join('')}
+          </div>
+          
+          <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab(this, 'qa-${rec.method_id}')">❓ Q&A Ibu</button>
+            <button class="tab-btn" onclick="switchTab(this, 'modul-${rec.method_id}')">📖 Modul Lengkap</button>
+            <button class="tab-btn" onclick="switchTab(this, 'jadwal-${rec.method_id}')">🗓️ Template Jadwal</button>
+            <button class="tab-btn" onclick="switchTab(this, 'checklist-${rec.method_id}')">✅ Checklist Milestone</button>
+          </div>
+
+          <div id="qa-${rec.method_id}" class="tab-content active q-and-a">
+            ${info.qasom.map(qa => `
+              <details>
+                <summary>${qa.q}</summary>
+                <p>${qa.a}</p>
+              </details>
+            `).join('')}
+          </div>
+
+          <div id="modul-${rec.method_id}" class="tab-content">
+            <p><strong>${info.name} — Panduan Lengkap untuk Ibu</strong></p>
+            ${info.modul_key_points ? `
+              <ul style="margin:1rem 0 1.5rem 1.5rem; padding:0; color:var(--gray-light); line-height:1.8;">
+                ${info.modul_key_points.map(p => `<li style="margin-bottom:0.75rem;">${p}</li>`).join('')}
+              </ul>
+            ` : ''}
+          </div>
+
+          <div id="jadwal-${rec.method_id}" class="tab-content">
+            <p><strong>Template Jadwal Harian ${info.name}</strong></p>
+            ${info.jadwal_checklist ? `
+              <div style="margin:1.5rem 0;">
+                ${Object.entries(info.jadwal_checklist).map(([usia, phases]) => `
+                  <div style="margin-bottom:1.5rem; background:rgba(16,185,129,0.04); padding:1rem; border-radius:8px;">
+                    <strong style="color:var(--primary); display:block; margin-bottom:0.75rem;">${usia.replace(/_/g, '-').replace('tahun', 'thn')}</strong>
+                    <div style="font-size:0.9rem; color:var(--gray-light); line-height:1.6;">
+                      <div style="margin-bottom:0.5rem;"><strong>🌅 Pagi:</strong> ${phases.pagi.map(p => `<div style="margin-left:1rem; margin-bottom:0.3rem;">${p}</div>`).join('')}</div>
+                      <div style="margin-bottom:0.5rem;"><strong>☀️ Siang:</strong> ${phases.siang.map(p => `<div style="margin-left:1rem; margin-bottom:0.3rem;">${p}</div>`).join('')}</div>
+                      <div><strong>🌙 Sore:</strong> ${phases.sore.map(p => `<div style="margin-left:1rem; margin-bottom:0.3rem;">${p}</div>`).join('')}</div>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            ` : ''}
+          </div>
+
+          <div id="checklist-${rec.method_id}" class="tab-content">
+            <p><strong>Milestone Development ${info.name}</strong></p>
+            ${info.milestones ? `
+              <div style="margin:1.5rem 0;">
+                ${Object.entries(info.milestones).map(([usia, milestones]) => `
+                  <div style="margin-bottom:1.5rem;">
+                    <strong style="color:var(--primary); display:block; margin-bottom:0.75rem;">${usia.replace(/_/g, '-').replace('tahun', 'thn')}</strong>
+                    <ul style="margin:0; padding-left:1.5rem; list-style:none; color:var(--gray-light);">
+                      ${milestones.map(m => `<li style="margin-bottom:0.75rem; line-height:1.5;">${m}</li>`).join('')}
+                    </ul>
+                  </div>
+                `).join('')}
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function switchTab(btn, contentId) {
+    const parent = btn.parentElement;
+    parent.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    parent.parentElement.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(contentId).classList.add('active');
+  }
+
+  function loadResults() {
+    const childData = JSON.parse(sessionStorage.getItem('growaide_child') || '{}');
+    const results = JSON.parse(sessionStorage.getItem('growaide_results') || '{}');
+    
+    if(childData.anak_name) {
+      document.getElementById('childName').textContent = `Untuk ${childData.anak_name}`;
+    }
+    
+    if(results.recommendations && results.recommendations.length > 0) {
+      const container = document.getElementById('recommendationsContainer');
+      container.innerHTML = results.recommendations.map(rec => renderRecommendation(rec)).join('');
+    } else {
+      document.getElementById('recommendationsContainer').innerHTML = `
+        <div style="text-align:center; padding:2rem; background:rgba(16,185,129,0.05); border-radius:12px;">
+          <p style="font-size:1.1rem; margin-bottom:1rem;">⏳ Loading rekomendasi...</p>
+          <p style="color:var(--gray-light); font-size:0.9rem;">Kalau stuck, <a href="/step2.html" style="color:var(--primary); text-decoration:underline;">mulai dari Step 2 lagi</a></p>
+        </div>
+      `;
+    }
+  }
+  
+  function downloadGuide() {
+    alert('📥 Feature coming: Download PDF panduan lengkap');
+  }
+  
+  loadResults();
+</script>
+
+</body>
+</html>

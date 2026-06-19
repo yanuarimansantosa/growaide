@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Step 3: Profil Orang Tua — GrowAIde</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+  :root {
+    --primary: #10B981;
+    --primary-dark: #059669;
+    --secondary: #0D9488;
+    --dark: #0A1628;
+    --navy: #0F2044;
+    --gray: #64748B;
+    --gray-light: rgba(255,255,255,0.6);
+    --white: #FFFFFF;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Plus Jakarta Sans',system-ui,sans-serif; background:var(--dark); color:var(--white); min-height:100vh; }
+  .header {
+    background:linear-gradient(135deg, var(--dark), var(--navy));
+    padding:2rem 2rem 1.5rem;
+    border-bottom:1px solid rgba(255,255,255,0.06);
+  }
+  .logo { font-size:1.2rem; font-weight:800; margin-bottom:1rem; }
+  .logo .ai { color:var(--primary); }
+  h1 { font-size:clamp(1.6rem, 5vw, 2rem); font-weight:800; margin-bottom:0.5rem; letter-spacing:-0.5px; }
+  .subtitle { font-size:0.95rem; color:var(--gray-light); margin-bottom:1.5rem; }
+  .progress-bar { height:6px; background:rgba(255,255,255,0.1); border-radius:99px; overflow:hidden; margin-bottom:1rem; }
+  .progress { height:100%; width:50%; background:linear-gradient(90deg, var(--primary), var(--secondary)); border-radius:99px; transition:width 0.3s ease; }
+  .progress-label { font-size:0.75rem; color:var(--gray-light); margin-top:0.5rem; }
+  .container { max-width:700px; margin:0 auto; padding:2rem; }
+  .form-intro { background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.2); border-radius:12px; padding:1.5rem; margin-bottom:2.5rem; font-size:0.95rem; line-height:1.6; }
+  .form-group { margin-bottom:2.5rem; }
+  .form-group label { display:block; font-weight:700; margin-bottom:1rem; font-size:1rem; }
+  .form-group .help-text { display:block; font-size:0.85rem; color:var(--gray-light); margin-bottom:1rem; line-height:1.5; }
+  .options { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:1rem; }
+  .option-btn { background:rgba(255,255,255,0.04); border:1.5px solid rgba(255,255,255,0.08); border-radius:12px; padding:1.25rem; text-align:left; cursor:pointer; transition:all 0.2s; color:var(--white); font-family:'Plus Jakarta Sans',system-ui,sans-serif; min-height:100px; display:flex; flex-direction:column; justify-content:center; }
+  .option-btn:hover { border-color:rgba(16,185,129,0.3); background:rgba(16,185,129,0.06); }
+  .option-btn.active { border-color:var(--primary); background:rgba(16,185,129,0.12); box-shadow:0 0 0 3px rgba(16,185,129,0.1); }
+  .option-btn strong { font-size:0.95rem; font-weight:700; margin-bottom:0.35rem; display:block; }
+  .option-btn small { font-size:0.8rem; color:var(--gray-light); font-weight:400; }
+  .btn-group { display:flex; gap:1rem; margin-top:3rem; }
+  .btn { flex:1; padding:0.9rem; border-radius:12px; border:none; font-weight:700; font-size:0.95rem; cursor:pointer; transition:all 0.2s; min-height:48px; font-family:'Plus Jakarta Sans',system-ui,sans-serif; }
+  .btn-primary { background:var(--primary); color:var(--dark); }
+  .btn-primary:hover { background:var(--primary-dark); transform:translateY(-2px); box-shadow:0 8px 16px rgba(16,185,129,0.3); }
+  .btn-secondary { background:transparent; color:var(--white); border:1.5px solid rgba(255,255,255,0.2); }
+  .btn-secondary:hover { border-color:var(--gray-light); color:var(--primary); }
+  @media (max-width:768px) {
+    .header { padding:1.5rem 1rem 1rem; }
+    .container { padding:1.5rem; }
+    h1 { font-size:clamp(1.4rem, 5vw, 1.8rem); }
+    .options { grid-template-columns:1fr; }
+    .btn-group { flex-direction:column; gap:0.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo"><span>Grow</span><span class="ai">AI</span><span>de</span></div>
+  <h1>👩‍👧 Tentang Ibu & Keluarga</h1>
+  <p class="subtitle">Biar tips yang kami kasih realistis untuk situasi Ibu</p>
+  <div class="progress-bar"><div class="progress"></div></div>
+  <p class="progress-label">⏱️ ~2 menit | Step 2 dari 3</p>
+</div>
+
+<div class="container">
+  <div class="form-intro">
+    ℹ️ <strong>Serius, gak ada jawaban salah.</strong> Ibu sibuk? Santai aja. Budget pas-pasan? Boleh. Kami menyesuaikan.
+  </div>
+
+  <form id="parentForm">
+    <div class="form-group">
+      <label>Gaya Ibu Mengasuh (pilih yang paling mirip)</label>
+      <span class="help-text">💭 Gimana Ibu biasanya ngasuh?</span>
+      <div class="options">
+        <button type="button" class="option-btn" data-field="gaya_parenting" data-value="flexible">
+          <strong>Fleksibel</strong>
+          <small>Kasih leluasa, coba-coba, belajar dari gagal</small>
+        </button>
+        <button type="button" class="option-btn" data-field="gaya_parenting" data-value="structured-rigid">
+          <strong>Terstruktur</strong>
+          <small>Jadwal jelas, aturan tegas, target akademik</small>
+        </button>
+        <button type="button" class="option-btn" data-field="gaya_parenting" data-value="very-relaxed">
+          <strong>Santai</strong>
+          <small>Percaya anak tumbuh sendiri, minimal push</small>
+        </button>
+        <button type="button" class="option-btn" data-field="gaya_parenting" data-value="ambitious">
+          <strong>Ambisius</strong>
+          <small>Pengen excel, kursus banyak, akademik ketat</small>
+        </button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Waktu Ibu untuk Anak per Hari</label>
+      <div class="options">
+        <button type="button" class="option-btn" data-field="waktu" data-value="minimal">
+          <strong>&lt; 1 jam</strong>
+          <small>Ibu sibuk, pagi/malam saja</small>
+        </button>
+        <button type="button" class="option-btn" data-field="waktu" data-value="medium">
+          <strong>1-2 jam</strong>
+          <small>Morning atau afternoon</small>
+        </button>
+        <button type="button" class="option-btn" data-field="waktu" data-value="high">
+          <strong>2-3 jam</strong>
+          <small>Cukup fleksibel</small>
+        </button>
+        <button type="button" class="option-btn" data-field="waktu" data-value="full">
+          <strong>&gt; 3 jam</strong>
+          <small>Di rumah / parental leave</small>
+        </button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Budget Pendidikan per Bulan</label>
+      <div class="options">
+        <button type="button" class="option-btn" data-field="budget" data-value="minimal">
+          <strong>Rp 0-500rb</strong>
+          <small>Sekolah negeri, free activities</small>
+        </button>
+        <button type="button" class="option-btn" data-field="budget" data-value="medium">
+          <strong>Rp 500k-2jt</strong>
+          <small>Sekolah swasta sedang</small>
+        </button>
+        <button type="button" class="option-btn" data-field="budget" data-value="high">
+          <strong>Rp 2-5jt</strong>
+          <small>Swasta bagus, 2-3 kursus</small>
+        </button>
+        <button type="button" class="option-btn" data-field="budget" data-value="premium">
+          <strong>&gt; Rp 5jt</strong>
+          <small>International, full extracurricular</small>
+        </button>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button type="button" class="btn btn-secondary" onclick="window.history.back()">← Kembali</button>
+      <button type="button" class="btn btn-primary" id="nextBtn">Lihat Rekomendasi →</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  const form = document.getElementById('parentForm');
+  const nextBtn = document.getElementById('nextBtn');
+  let selections = {
+    gaya_parenting: '',
+    waktu: '',
+    budget: ''
+  };
+
+  document.querySelectorAll('.option-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const field = btn.dataset.field;
+      const value = btn.dataset.value;
+      
+      document.querySelectorAll(`[data-field="${field}"]`).forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selections[field] = value;
+    });
+  });
+
+  nextBtn.addEventListener('click', async (e) => {
+    e.preventDefault();
+    
+    // Get child data from step 2
+    const childData = JSON.parse(sessionStorage.getItem('growaide_child') || '{}');
+    
+    console.log('Child data:', childData);
+    console.log('Parent selections:', selections);
+    
+    // Prepare payload untuk API
+    const payload = {
+      anak: {
+        name: childData.anak_name || 'Anak',
+        age: childData.anak_age || '',
+        temperament: childData.temperament || '',
+        gaya_belajar: childData.gaya_belajar || '',
+        minat: childData.minat || [],
+        tantangan: childData.tantangan || ''
+      },
+      ortu: {
+        gaya_parenting: selections.gaya_parenting || 'flexible',
+        waktu: selections.waktu || 'medium',
+        budget: selections.budget || 'medium'
+      }
+    };
+    
+    console.log('API Payload:', payload);
+    
+    try {
+      // Call API
+      const response = await fetch('http://localhost:5000/api/assess', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      
+      const data = await response.json();
+      console.log('API Response:', data);
+      
+      // Save hasil ke sessionStorage
+      sessionStorage.setItem('growaide_results', JSON.stringify(data));
+      
+      // Redirect ke step 4
+      window.location.href = '/step4.html';
+    } catch(err) {
+      console.error('API Error:', err);
+      alert('Error: ' + err.message + '\n\nCheck browser console (F12) for details');
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rencana Aktivitas — GrowAIde</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+  :root {
+    --primary: #10B981;
+    --primary-dark: #059669;
+    --secondary: #0D9488;
+    --dark: #0A1628;
+    --navy: #0F2044;
+    --gray: #64748B;
+    --gray-light: rgba(255,255,255,0.6);
+    --white: #FFFFFF;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+    background:var(--dark);
+    color:var(--white);
+    min-height:100vh;
+  }
+
+  .header {
+    background:linear-gradient(135deg, var(--dark), var(--navy));
+    padding:2rem 2rem 1.5rem;
+    border-bottom:1px solid rgba(255,255,255,0.06);
+  }
+
+  .logo { font-size:1.2rem; font-weight:800; margin-bottom:1rem; }
+  .logo .ai { color:var(--primary); }
+
+  h1 { font-size:clamp(1.6rem, 5vw, 2rem); font-weight:800; margin-bottom:0.5rem; }
+  .subtitle { font-size:0.95rem; color:var(--gray-light); }
+
+  .container { max-width:900px; margin:0 auto; padding:2rem; }
+
+  .hero-card {
+    background:linear-gradient(135deg, rgba(16,185,129,0.15), rgba(13,148,136,0.1));
+    border:1px solid rgba(16,185,129,0.2);
+    border-radius:16px;
+    padding:2.5rem;
+    margin-bottom:2rem;
+  }
+
+  .hero-title {
+    font-size:1.4rem;
+    font-weight:800;
+    color:var(--primary);
+    margin-bottom:1rem;
+  }
+
+  .hero-subtitle {
+    font-size:0.95rem;
+    color:var(--gray-light);
+    margin-bottom:1.5rem;
+    line-height:1.6;
+  }
+
+  .activity-block {
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:12px;
+    padding:1.5rem;
+    margin-bottom:1.5rem;
+  }
+
+  .activity-label {
+    font-size:0.8rem;
+    font-weight:700;
+    color:var(--primary);
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-bottom:0.5rem;
+  }
+
+  .activity-content {
+    font-size:1rem;
+    font-weight:600;
+    margin-bottom:0.75rem;
+  }
+
+  .activity-detail {
+    font-size:0.9rem;
+    color:var(--gray-light);
+    line-height:1.6;
+  }
+
+  .materials {
+    background:rgba(16,185,129,0.05);
+    border-left:4px solid var(--primary);
+    padding:1rem;
+    border-radius:8px;
+    margin-top:1.5rem;
+    font-size:0.9rem;
+    color:var(--gray-light);
+  }
+
+  .materials-title {
+    font-weight:600;
+    color:var(--white);
+    margin-bottom:0.5rem;
+  }
+
+  .collapse-trigger {
+    display:flex;
+    align-items:center;
+    gap:0.75rem;
+    cursor:pointer;
+    font-size:1rem;
+    font-weight:600;
+    padding:1rem;
+    background:rgba(16,185,129,0.1);
+    border:1px solid rgba(16,185,129,0.2);
+    border-radius:8px;
+    color:var(--primary);
+    margin-top:1.5rem;
+    transition:all 0.2s;
+  }
+
+  .collapse-trigger:hover {
+    background:rgba(16,185,129,0.15);
+  }
+
+  .collapse-icon {
+    display:inline-block;
+    transition:transform 0.2s;
+  }
+
+  .collapse-trigger.open .collapse-icon {
+    transform:rotate(180deg);
+  }
+
+  .collapse-content {
+    display:none;
+    margin-top:1rem;
+    padding:1.5rem;
+    background:rgba(255,255,255,0.02);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:8px;
+  }
+
+  .collapse-content.open {
+    display:block;
+  }
+
+  .method-ref {
+    background:rgba(16,185,129,0.08);
+    border-left:4px solid var(--primary);
+    padding:1rem;
+    margin-bottom:1rem;
+    border-radius:8px;
+    font-size:0.9rem;
+    line-height:1.6;
+  }
+
+  .method-ref-name {
+    font-weight:600;
+    color:var(--primary);
+  }
+
+  .method-ref-principle {
+    color:var(--gray-light);
+    margin-top:0.3rem;
+    font-style:italic;
+  }
+
+  .actions {
+    display:flex;
+    gap:1rem;
+    margin-top:2.5rem;
+    flex-wrap:wrap;
+  }
+
+  .btn {
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:0.5rem;
+    border:none;
+    border-radius:12px;
+    font-weight:600;
+    font-size:0.95rem;
+    padding:0.9rem 2rem;
+    cursor:pointer;
+    transition:all 0.2s;
+    font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+    min-height:48px;
+  }
+
+  .btn-primary {
+    background:var(--primary);
+    color:var(--dark);
+  }
+
+  .btn-primary:hover {
+    background:var(--primary-dark);
+    transform:translateY(-2px);
+    box-shadow:0 8px 16px rgba(16,185,129,0.3);
+  }
+
+  .btn-secondary {
+    background:transparent;
+    color:var(--white);
+    border:1.5px solid rgba(255,255,255,0.2);
+  }
+
+  .btn-secondary:hover {
+    border-color:var(--primary);
+    color:var(--primary);
+    transform:translateY(-2px);
+  }
+
+  @media (max-width:768px) {
+    .container { padding:1.5rem; }
+    .hero-card { padding:1.5rem; }
+    .activity-block { padding:1.25rem; }
+    .btn { width:100%; padding:1rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo"><span>Grow</span><span class="ai">AI</span><span>de</span></div>
+  <h1 id="heroTitle">Rencana Aktivitas</h1>
+  <p class="subtitle">Aktivitas konkrit yang bisa Ibu coba minggu ini</p>
+</div>
+
+<div class="container">
+  <div class="hero-card" id="heroCard">
+    <!-- Populated by JavaScript -->
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-primary" onclick="goToTrack()">Mulai Lacak Progress →</button>
+    <button class="btn btn-secondary" onclick="goBackObserve()">← Ubah Observasi</button>
+  </div>
+</div>
+
+<script>
+  function loadRecommendation() {
+    const rec = JSON.parse(sessionStorage.getItem('growaide_recommendation') || '{}');
+    const name = sessionStorage.getItem('growaide_observe_name') || 'Anak Ibu';
+
+    if (!rec.id) {
+      document.querySelector('.hero-card').innerHTML = `
+        <p style="color:var(--gray-light); text-align:center;">
+          Maaf, rekomendasi tidak ditemukan. <a href="/observe.html" style="color:var(--primary);">Mulai ulang</a>
+        </p>
+      `;
+      return;
+    }
+
+    const html = `
+      <div class="hero-title">${name}, coba ini minggu ini:</div>
+      <div class="hero-subtitle">${rec.title}</div>
+
+      <div class="activity-block">
+        <div class="activity-label">📋 Apa Ibu Lakukan</div>
+        <div class="activity-detail">${rec.what_ibu_does}</div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+        <div class="activity-block">
+          <div class="activity-label">⏱️ Frekuensi</div>
+          <div class="activity-content">${rec.frequency}</div>
+        </div>
+        <div class="activity-block">
+          <div class="activity-label">⌚ Durasi</div>
+          <div class="activity-content">${rec.duration}</div>
+        </div>
+      </div>
+
+      <div class="activity-block">
+        <div class="activity-label">📦 Apa yang Diperlukan</div>
+        <div class="activity-detail">${rec.materials_needed || 'Tidak ada / hanya barang yang ada di rumah'}</div>
+      </div>
+
+      <div class="activity-block">
+        <div class="activity-label">✅ Tanda Berhasil</div>
+        <div class="activity-detail">
+          ${rec.success_signals.map(s => `
+            <div style="margin-bottom:0.75rem;">
+              <input type="checkbox" id="signal_${s.id}" style="margin-right:0.5rem;">
+              <label for="signal_${s.id}">${s.text}</label>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <button class="collapse-trigger" onclick="toggleCollapse(this)">
+        <span class="collapse-icon">▼</span>
+        Kenapa ini? (Dari metode mana?)
+      </button>
+
+      <div class="collapse-content">
+        <p style="margin-bottom:1.5rem; color:var(--gray-light);">
+          Aktivitas ini direkomendasikan karena sesuai dengan kebutuhan ${name} saat ini. Berikut metode yang jadi acuannya:
+        </p>
+        ${rec.method_refs.map(m => `
+          <div class="method-ref">
+            <div class="method-ref-name">${m.name}</div>
+            <div class="method-ref-principle">"${m.principle}"</div>
+          </div>
+        `).join('')}
+        <p style="margin-top:1.5rem; color:var(--gray-light); font-size:0.85rem; border-top:1px solid rgba(255,255,255,0.1); padding-top:1rem;">
+          Ingin pelajarin metode ini lebih lanjut? <a href="/step4.html" style="color:var(--primary);">Baca panduan lengkap →</a>
+        </p>
+      </div>
+    `;
+
+    document.querySelector('.hero-card').innerHTML = html;
+  }
+
+  function toggleCollapse(trigger) {
+    trigger.classList.toggle('open');
+    trigger.nextElementSibling?.classList.toggle('open');
+  }
+
+  function goToTrack() {
+    // Save recommendation tracking state
+    sessionStorage.setItem('growaide_tracking_started', 'true');
+    window.location.href = '/track.html';
+  }
+
+  function goBackObserve() {
+    window.location.href = '/observe.html';
+  }
+
+  // Load on page load
+  loadRecommendation();
+</script>
+
+</body>
+</html>

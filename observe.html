@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Observasi Anak — GrowAIde</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+  :root {
+    --primary: #10B981;
+    --primary-dark: #059669;
+    --secondary: #0D9488;
+    --accent: #F59E0B;
+    --dark: #0A1628;
+    --navy: #0F2044;
+    --gray: #64748B;
+    --gray-light: rgba(255,255,255,0.6);
+    --white: #FFFFFF;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+    background:var(--dark);
+    color:var(--white);
+    min-height:100vh;
+  }
+
+  .header {
+    background:linear-gradient(135deg, var(--dark), var(--navy));
+    padding:2rem 2rem 1.5rem;
+    border-bottom:1px solid rgba(255,255,255,0.06);
+  }
+
+  .logo { font-size:1.2rem; font-weight:800; margin-bottom:1rem; }
+  .logo .ai { color:var(--primary); }
+
+  h1 { font-size:clamp(1.6rem, 5vw, 2rem); font-weight:800; margin-bottom:0.5rem; }
+  .subtitle { font-size:0.95rem; color:var(--gray-light); margin-bottom:1.5rem; }
+
+  .container { max-width:900px; margin:0 auto; padding:2rem; }
+
+  .intro {
+    background:linear-gradient(135deg, rgba(16,185,129,0.1), rgba(13,148,136,0.1));
+    border:1px solid rgba(16,185,129,0.2);
+    border-radius:16px;
+    padding:2rem;
+    margin-bottom:3rem;
+  }
+
+  .intro-title { font-size:1.2rem; font-weight:700; margin-bottom:0.75rem; color:var(--primary); }
+  .intro-text { font-size:0.95rem; color:var(--gray-light); line-height:1.6; }
+
+  .instruction {
+    font-size:1.05rem;
+    font-weight:600;
+    color:var(--white);
+    margin-bottom:1.5rem;
+  }
+
+  .card-grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));
+    gap:1rem;
+    margin-bottom:3rem;
+  }
+
+  .behavior-card {
+    background:rgba(255,255,255,0.04);
+    border:2px solid rgba(255,255,255,0.1);
+    border-radius:12px;
+    padding:1.5rem;
+    cursor:pointer;
+    transition:all 0.2s;
+    text-align:center;
+    user-select:none;
+  }
+
+  .behavior-card:hover {
+    background:rgba(16,185,129,0.1);
+    border-color:var(--primary);
+    transform:translateY(-2px);
+  }
+
+  .behavior-card.selected {
+    background:rgba(16,185,129,0.2);
+    border-color:var(--primary);
+    box-shadow:0 0 20px rgba(16,185,129,0.3);
+  }
+
+  .card-emoji { font-size:2.5rem; margin-bottom:0.75rem; }
+  .card-text { font-size:0.9rem; font-weight:600; line-height:1.4; }
+
+  .selected-count {
+    font-size:0.85rem;
+    color:var(--gray-light);
+    margin-top:0.5rem;
+    font-style:italic;
+  }
+
+  .actions {
+    display:flex;
+    gap:1rem;
+    justify-content:center;
+    margin-top:2rem;
+    flex-wrap:wrap;
+  }
+
+  .btn {
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:0.5rem;
+    border:none;
+    border-radius:12px;
+    font-weight:600;
+    font-size:0.95rem;
+    padding:0.9rem 2rem;
+    cursor:pointer;
+    transition:all 0.2s;
+    font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+    min-height:48px;
+  }
+
+  .btn-primary {
+    background:var(--primary);
+    color:var(--dark);
+  }
+
+  .btn-primary:hover {
+    background:var(--primary-dark);
+    transform:translateY(-2px);
+    box-shadow:0 8px 16px rgba(16,185,129,0.3);
+  }
+
+  .btn-primary:disabled {
+    background:var(--gray);
+    cursor:not-allowed;
+    transform:none;
+  }
+
+  .btn-secondary {
+    background:transparent;
+    color:var(--white);
+    border:1.5px solid rgba(255,255,255,0.2);
+  }
+
+  .btn-secondary:hover {
+    border-color:var(--primary);
+    color:var(--primary);
+    transform:translateY(-2px);
+  }
+
+  .form-group {
+    margin-bottom:2rem;
+  }
+
+  .form-label {
+    display:block;
+    font-weight:600;
+    margin-bottom:0.75rem;
+    color:var(--white);
+  }
+
+  .form-input {
+    width:100%;
+    padding:0.85rem 1rem;
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:8px;
+    background:rgba(255,255,255,0.04);
+    color:var(--white);
+    font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+    font-size:1rem;
+  }
+
+  .form-input::placeholder {
+    color:var(--gray-light);
+  }
+
+  .form-input:focus {
+    outline:none;
+    border-color:var(--primary);
+    background:rgba(16,185,129,0.05);
+  }
+
+  .note-box {
+    background:rgba(16,185,129,0.05);
+    border-left:4px solid var(--primary);
+    padding:1rem;
+    border-radius:8px;
+    margin-bottom:2rem;
+    font-size:0.9rem;
+    color:var(--gray-light);
+    line-height:1.6;
+  }
+
+  @media (max-width:768px) {
+    .container { padding:1.5rem; }
+    h1 { font-size:clamp(1.4rem, 5vw, 1.8rem); }
+    .card-grid { gap:0.75rem; }
+    .behavior-card { padding:1.25rem; }
+    .btn { width:100%; padding:1rem; font-size:0.9rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo"><span>Grow</span><span class="ai">AI</span><span>de</span></div>
+  <h1>Observasi Anak Hari Ini</h1>
+  <p class="subtitle">Apa yang Ibu lihat? Pilih 1–3 perilaku yang paling terasa hari ini.</p>
+</div>
+
+<div class="container">
+  <div class="intro">
+    <div class="intro-title">Cara Kerjanya Sederhana</div>
+    <div class="intro-text">
+      GrowAIde tidak perlu Ibu hafal metode apapun. Cukup observasi: apa yang anak lakukan hari ini? Ada masalah apa? Dari situ, Ibu dapat rekomendasi aktivitas konkrit yang bisa dicoba minggu ini.
+    </div>
+  </div>
+
+  <form id="observeForm">
+    <div class="form-group">
+      <label class="form-label">Nama Anak</label>
+      <input type="text" class="form-input" id="childName" placeholder="Contoh: Dina, Rafa, Aldi" required>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Tanggal Lahir</label>
+      <input type="date" class="form-input" id="childDob" required>
+    </div>
+
+    <div class="note-box">
+      💡 <strong>Tip:</strong> Ibu belum perlu paham "perkembangan fase X". Cukup pilih apa yang Ibu lihat hari ini atau minggu ini. GrowAIde yang identifikasi fase & sarankan aktivitas.
+    </div>
+
+    <div class="form-group">
+      <div class="instruction">Pilih 1–3 perilaku yang paling Ibu perhatikan:</div>
+      <div class="card-grid" id="behaviorGrid">
+        <!-- Populated by JavaScript -->
+      </div>
+    </div>
+
+    <div class="actions">
+      <button type="submit" class="btn btn-primary">Lihat Rekomendasi</button>
+      <a href="/" class="btn btn-secondary">← Kembali</a>
+    </div>
+  </form>
+</div>
+
+<script>
+  // Behavior triggers by domain (0-3 focus)
+  const behaviors = [
+    // Motorik
+    { emoji: '🏃', text: 'Gerak terbatas\njarang berguling', domain: 'motorik', id: 'motorik_lag' },
+    { emoji: '✋', text: 'Belum peggang\nbarang dengan mantap', domain: 'motorik', id: 'fine_motor_lag' },
+
+    // Bahasa
+    { emoji: '🗣️', text: 'Belum bicara\nkata berarti', domain: 'bahasa', id: 'lang_production' },
+    { emoji: '👂', text: 'Dengar tapi\nbelum merespons', domain: 'bahasa', id: 'lang_comprehension' },
+
+    // Kognitif
+    { emoji: '🧩', text: 'Main monoton\ntak ada variasi', domain: 'kognitif', id: 'play_variety' },
+    { emoji: '🤔', text: 'Fokus sulit\nkonsentrasi sebentar', domain: 'kognitif', id: 'attention_span' },
+
+    // Sosial-Emosional
+    { emoji: '😤', text: 'Tantrum sering\nsulit ditenangkan', domain: 'sosial-emosional', id: 'tantrum' },
+    { emoji: '😢', text: 'Cemas/sedih\njarang senyum', domain: 'sosial-emosional', id: 'anxiety' },
+
+    // Kemandirian
+    { emoji: '🍴', text: 'Belum mandiri\nminta bantuan semua', domain: 'kemandirian', id: 'dependence' },
+    { emoji: '🧸', text: 'Tidak tertarik\nmainan/aktivitas', domain: 'kemandirian', id: 'disinterest' }
+  ];
+
+  const grid = document.getElementById('behaviorGrid');
+  const form = document.getElementById('observeForm');
+  const selected = new Set();
+
+  // Render behavior cards
+  behaviors.forEach(b => {
+    const card = document.createElement('div');
+    card.className = 'behavior-card';
+    card.innerHTML = `
+      <div class="card-emoji">${b.emoji}</div>
+      <div class="card-text">${b.text}</div>
+      <div class="selected-count">👆</div>
+    `;
+    card.addEventListener('click', () => {
+      if (selected.has(b.id)) {
+        selected.delete(b.id);
+        card.classList.remove('selected');
+      } else {
+        if (selected.size < 3) {
+          selected.add(b.id);
+          card.classList.add('selected');
+        }
+      }
+    });
+    grid.appendChild(card);
+  });
+
+  // Submit form
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById('childName').value.trim();
+    const dob = document.getElementById('childDob').value;
+
+    if (!name || !dob || selected.size === 0) {
+      alert('Lengkapi nama, tanggal lahir, dan pilih minimal 1 perilaku');
+      return;
+    }
+
+    // Save to sessionStorage
+    sessionStorage.setItem('growaide_observe_name', name);
+    sessionStorage.setItem('growaide_observe_dob', dob);
+    sessionStorage.setItem('growaide_observe_triggers', JSON.stringify(Array.from(selected)));
+
+    // Call API
+    callObserveAPI(name, dob, Array.from(selected));
+  });
+
+  function callObserveAPI(name, dob, triggers) {
+    // Calculate age in months
+    const today = new Date();
+    const birthDate = new Date(dob);
+    let ageMonths = (today.getFullYear() - birthDate.getFullYear()) * 12 + (today.getMonth() - birthDate.getMonth());
+    ageMonths = Math.max(0, ageMonths);
+
+    const payload = {
+      child_name: name,
+      child_dob: dob,
+      age_months: ageMonths,
+      observation_triggers: triggers
+    };
+
+    fetch('/api/observe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (data.status === 'ok' && data.recommendation) {
+        // Save recommendation to sessionStorage
+        sessionStorage.setItem('growaide_recommendation', JSON.stringify(data.recommendation));
+        // Navigate to plan screen
+        window.location.href = '/plan.html';
+      } else {
+        alert('Gagal dapat rekomendasi: ' + (data.error || 'error tidak terdefinisi'));
+      }
+    })
+    .catch(err => {
+      console.error('API error:', err);
+      alert('Ada masalah dengan koneksi. Coba lagi.');
+    });
+  }
+
+  // Date input: default to today, max today
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('childDob').max = today;
+</script>
+
+</body>
+</html>

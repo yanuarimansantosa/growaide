@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Step 1: Kenali 6 Metode Pendidikan — GrowAIde</title>
+<style>
+  :root {
+    --green: #22C55E;
+    --dark: #0A1628;
+    --navy: #0F2044;
+    --cream: #F0FDF4;
+    --white: #FFFFFF;
+    --gray: #64748B;
+    --light: #F8FAFC;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Inter',system-ui,sans-serif; background:var(--dark); color:var(--white); min-height:100vh; }
+
+  .header {
+    background:linear-gradient(135deg, var(--dark), var(--navy));
+    padding:2rem; text-align:center;
+    border-bottom:1px solid rgba(255,255,255,0.06);
+  }
+  .progress-bar {
+    height:4px; background:rgba(255,255,255,0.1); margin:2rem 0 0;
+    border-radius:99px;
+  }
+  .progress { height:100%; width:25%; background:var(--green); border-radius:99px; }
+
+  .container { max-width:1000px; margin:0 auto; padding:2rem; }
+
+  h1 { font-size:2rem; font-weight:800; margin-bottom:1rem; letter-spacing:-0.5px; }
+  .subtitle { color:rgba(255,255,255,0.5); font-size:1.05rem; margin-bottom:2rem; }
+
+  .methods-grid {
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
+    gap:1.5rem; margin-bottom:3rem;
+  }
+
+  .method-card {
+    background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+    border-radius:20px; padding:2rem; cursor:pointer;
+    transition:all 0.3s; position:relative; overflow:hidden;
+  }
+  .method-card:hover {
+    background:rgba(255,255,255,0.08);
+    border-color:rgba(255,255,255,0.15);
+    transform:translateY(-4px);
+  }
+  .method-card.active {
+    border-color:currentColor;
+    background:rgba(255,255,255,0.06);
+  }
+
+  .method-color { width:100%; height:3px; background:currentColor; border-radius:99px; margin-bottom:1.25rem; }
+  .method-name { font-size:1.25rem; font-weight:700; margin-bottom:0.5rem; }
+  .method-filosofi { font-size:0.95rem; color:rgba(255,255,255,0.6); line-height:1.6; margin-bottom:1.5rem; }
+
+  .method-details {
+    display:none; font-size:0.85rem; color:rgba(255,255,255,0.4); line-height:1.8;
+  }
+  .method-details.active { display:block; }
+
+  .method-details p { margin-bottom:0.75rem; }
+  .detail-label { color:rgba(255,255,255,0.5); font-weight:600; }
+
+  .cta-group {
+    display:flex; gap:1rem; justify-content:center;
+    padding:2rem; margin-top:2rem;
+  }
+  .btn {
+    padding:0.85rem 2rem; border-radius:12px; font-weight:700;
+    text-decoration:none; border:none; cursor:pointer;
+    transition:all 0.2s; font-size:0.95rem;
+  }
+  .btn-primary {
+    background:var(--green); color:var(--dark);
+  }
+  .btn-primary:hover { background:#16A34A; }
+  .btn-secondary {
+    background:transparent; color:var(--white);
+    border:1px solid rgba(255,255,255,0.2);
+  }
+  .btn-secondary:hover { border-color:var(--green); }
+
+  /* Mobile optimization */
+  @media (max-width: 768px) {
+    .header { padding:1.5rem 1rem; }
+    h1 { font-size:clamp(1.5rem, 5vw, 2rem); }
+    .subtitle { font-size:0.95rem; }
+    .container { padding:1rem; }
+
+    .methods-grid {
+      grid-template-columns: 1fr;
+      gap:1rem;
+      margin-bottom:2rem;
+    }
+
+    .method-card {
+      padding:1.5rem;
+    }
+
+    .method-name { font-size:1.1rem; }
+    .method-filosofi { font-size:0.9rem; }
+
+    .cta-group {
+      flex-direction: column;
+      gap:0.75rem;
+      padding:1rem;
+    }
+
+    .btn { width:100%; min-height:48px; display:flex; align-items:center; justify-content:center; padding:1rem; font-size:0.9rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Step 1: Kenali 6 Metode Pendidikan</h1>
+  <p class="subtitle">Pahami filosofi masing-masing sebelum asesmen</p>
+  <div class="progress-bar"><div class="progress"></div></div>
+</div>
+
+<div class="container">
+  <div class="methods-grid" id="methodsGrid"></div>
+  
+  <div class="cta-group">
+    <a href="/growaide-step2.html" class="btn btn-primary">Lanjut ke Step 2: Asesmen Anak</a>
+    <a href="/" class="btn btn-secondary">← Kembali</a>
+  </div>
+</div>
+
+<script>
+  const METHODS_API = '/api/methods';
+
+  fetch(METHODS_API)
+    .then(r => r.json())
+    .then(data => {
+      const grid = document.getElementById('methodsGrid');
+      data.methods.forEach(method => {
+        const card = document.createElement('div');
+        card.className = 'method-card';
+        card.style.color = method.warna;
+        card.innerHTML = `
+          <div class="method-color"></div>
+          <div class="method-name">${method.name}</div>
+          <div class="method-filosofi">${method.filosofi}</div>
+          <div class="method-details">
+            <p><span class="detail-label">Cocok untuk:</span><br>${method.deskripsi}</p>
+            <p><span class="detail-label">Temperamen:</span><br>${method.cocok_temperament.join(', ')}</p>
+          </div>
+        `;
+        card.addEventListener('click', function() {
+          document.querySelectorAll('.method-card').forEach(c => {
+            c.classList.remove('active');
+            c.querySelector('.method-details').classList.remove('active');
+          });
+          this.classList.add('active');
+          this.querySelector('.method-details').classList.add('active');
+        });
+        grid.appendChild(card);
+      });
+    });
+</script>
+
+</body>
+</html>
